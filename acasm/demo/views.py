@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from . serializers import UserLoginSerializer, UserSignUpSerializer
+from . models import User
 
 
 # Create your views here.
@@ -10,7 +11,7 @@ from . serializers import UserLoginSerializer, UserSignUpSerializer
 def home(request):
     return HttpResponse("Your set up worked")
 
-class Signup(APIView):
+class Signup(APIView): #called a logic handling an signup 
     def post(self, request):
         serializer = UserSignUpSerializer(data=request.data)
         if serializer.is_valid():
@@ -18,3 +19,18 @@ class Signup(APIView):
             return Response({'message' : 'sign up successful'})
         return Response({'message' : 'an error occured', 'error' : serializer.errors})
 
+class Login(APIView):
+    def post(self, request):
+        serializer = UserLoginSerializer(data=request.data)
+        if serializer.is_valid():
+            username = serializer.validated_data.get('username')
+            password = serializer.validated_data.get('password')
+
+            try : 
+                user_to_login = User.objects.get(username=username)
+            except Exception as e :
+                return Response({'error' : str(e)})
+            if user_to_login.password == password :
+                return Response({'message' : 'login successful', 'user_data'  : UserLoginSerializer(user_to_login).data })
+            return Response({'message' : 'wrong credentials'})
+        return Response({'message' : 'the data sent to the api is not valid'})
