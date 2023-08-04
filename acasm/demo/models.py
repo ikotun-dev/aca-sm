@@ -12,5 +12,3 @@ class Post(models.Model):
     content = models.CharField(max_length=255)
     owner = models.ForeignKey(User, on_delete=models.CASCADE, null=False)
 
-
-    
