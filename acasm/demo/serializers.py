@@ -11,3 +11,8 @@ class UserSignUpSerializer(serializers.ModelSerializer):
         model = models.User
         fields = ('username', 'password')
         
+class PostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Post
+        fields = '__all__'
+        read_only_fields = ('id',)

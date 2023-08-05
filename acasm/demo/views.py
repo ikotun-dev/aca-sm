@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from . serializers import UserLoginSerializer, UserSignUpSerializer
+from . serializers import UserLoginSerializer, UserSignUpSerializer, PostSerializer
 from . models import User
 
 
@@ -35,3 +35,10 @@ class Login(APIView): #called a logic handling an login
             return Response({'message' : 'wrong credentials'})
         return Response({'message' : 'the data sent to the api is not valid'})
 
+class Post(APIView):
+    def post(self, request):
+        serializer = PostSerializer(data=request.data)
+        if serializer.is_valid() : 
+            serializer.save()
+            return Response({'message' : 'post has been created successfully', 'post_data'  :  serializer.data})
+        return Response({'message'  : 'data sent to api is not valid'})
