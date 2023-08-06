@@ -19,6 +19,7 @@ class Signup(APIView): #called a logic handling an signup
             return Response({'message' : 'sign up successful'})
         return Response({'message' : 'an error occured', 'error' : serializer.errors})
 
+
 class Login(APIView): #called a logic handling an login 
     def post(self, request):
         serializer = UserLoginSerializer(data=request.data)
@@ -34,6 +35,7 @@ class Login(APIView): #called a logic handling an login
                 return Response({'message' : 'login successful', 'user_data'  : UserLoginSerializer(user_to_login).data })
             return Response({'message' : 'wrong credentials'})
         return Response({'message' : 'the data sent to the api is not valid'})
+
 
 class Post(APIView):
     def post(self, request):
