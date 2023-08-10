@@ -4,7 +4,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from . serializers import UserLoginSerializer, UserSignUpSerializer, PostSerializer
 from . models import User
-
+from . models import Post 
+from . import models
 
 # Create your views here.
 
@@ -43,4 +44,12 @@ class Post(APIView):
         if serializer.is_valid() : 
             serializer.save()
             return Response({'message' : 'post has been created successfully', 'post_data'  :  serializer.data})
+        print(serializer.errors)
         return Response({'message'  : 'data sent to api is not valid'})
+
+    def get(self, request):
+        posts = models.Post.objects.all()
+
+        serializer = PostSerializer(posts, many=True)
+        return Response({'posts' : serializer.data})
+

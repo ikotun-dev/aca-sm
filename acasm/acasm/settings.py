@@ -47,6 +47,7 @@ MIDDLEWARE = [
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
+     'corsheaders.middleware.CorsMiddleware',
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
@@ -71,8 +72,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "acasm.wsgi.application"
-
-CORS_ALLOWED_ORIGINS = ["http://127.0.0.1:5500", "http://127.0.0.1:8080", "http://localhost:8080"]
+CORS_ORIGIN_ALLOW_ALL = True
+#CORS_ALLOWED_ORIGINS = ["http://127.0.0.1:5500", "http://127.0.0.1:8080", "http://localhost:8080"]
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
